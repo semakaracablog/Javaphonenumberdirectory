@@ -1,0 +1,89 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class TelephoneDirectory {
+    private HashMap<String, String> contacts;
+
+    public TelephoneDirectory() {
+        contacts = new HashMap<>();
+    }
+
+    // Add a contact to the directory
+    public void addContact(String name, String phoneNumber) {
+        contacts.put(name, phoneNumber);
+    }
+
+    // Retrieve a contact's phone number
+    public String getPhoneNumber(String name) {
+        return contacts.get(name);
+    }
+
+    // Remove a contact from the directory
+    public void removeContact(String name) {
+        contacts.remove(name);
+    }
+
+    // Display all contacts in the directory
+    public void listContacts() {
+        for (String name : contacts.keySet()) {
+            String phoneNumber = contacts.get(name);
+            System.out.println(name + ": " + phoneNumber);
+        }
+    }
+
+    // Main method to run the application
+    public static void main(String[] args) {
+        TelephoneDirectory directory = new TelephoneDirectory();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\nTelephone Directory:");
+            System.out.println("1. Add contact");
+            System.out.println("2. Get contact's phone number");
+            System.out.println("3. Remove contact");
+            System.out.println("4. List all contacts");
+            System.out.println("5. Exit");
+            System.out.print("Choose an option: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter phone number: ");
+                    String phoneNumber = scanner.nextLine();
+                    directory.addContact(name, phoneNumber);
+                    System.out.println("Contact added.");
+                    break;
+                case 2:
+                    System.out.print("Enter name: ");
+                    name = scanner.nextLine();
+                    String result = directory.getPhoneNumber(name);
+                    if (result != null) {
+                        System.out.println("Phone number for " + name + ": " + result);
+                    } else {
+                        System.out.println("Contact not found.");
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter name: ");
+                    name = scanner.nextLine();
+                    directory.removeContact(name);
+                    System.out.println("Contact removed.");
+                    break;
+                case 4:
+                    System.out.println("All contacts:");
+                    directory.listContacts();
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
